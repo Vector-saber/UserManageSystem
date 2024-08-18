@@ -14,10 +14,15 @@ public interface UserMapper extends BaseMapper<User> {
     @Select("select * from user where valid=1 limit #{currentPage}, #{pageSize}")
     List<User> selectUsersPage(@Param("currentPage") Integer currentPage, @Param("pageSize") Integer pageSize);
 
-    @Select("select count(*) from user")
+    @Select("select count(*) from user where valid=1")
     Long getUserCount();
 
     @Update("update user set valid = #{valid} where id = #{id}")
     void updateValid(@Param("id")Integer id,@Param("valid")Integer valid);
+
+    @Update("update user set user_name=#{userName},true_name=#{trueName},telephone=#{telephone},email=#{email} where id=#{id}")
+    void updateUser(@Param("id")Integer id,
+                    @Param("userName")String userName,@Param("trueName")String trueName,
+                    @Param("telephone")String telephone,@Param("email")String email);
 
 }

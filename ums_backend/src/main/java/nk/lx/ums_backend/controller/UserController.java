@@ -52,4 +52,10 @@ public class UserController {
         return ResponseVO.success();
     }
 
+    @PostMapping("/updateUser")
+    public ResponseVO<?> updateUser(User user){
+        userService.updateUser(user.getId(),user.getUserName(),user.getTrueName(),user.getTelephone(),user.getEmail());
+        return ResponseVO.success();
+    }
+
 }

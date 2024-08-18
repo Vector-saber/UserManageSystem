@@ -15,5 +15,6 @@ public interface UserService extends IService<User> {
 
     void updateValid(Integer id,Integer valid);
 
+    void updateUser(Integer id, String userName, String trueName, String telephone, String email);
 
 }
