@@ -38,4 +38,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public void updateValid(Integer id, Integer valid) {
         userMapper.updateValid(id, valid);
     }
+
+    @Override
+    public void updateUser(Integer id, String userName, String trueName, String telephone, String email) {
+        userMapper.updateUser(id,userName,trueName,telephone,email);
+    }
+
 }

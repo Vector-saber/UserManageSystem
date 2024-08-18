@@ -45,7 +45,7 @@
                             <el-button 
                             size="small" 
                             type="primary"
-                            
+                            @click="editUser(scope.row)"
                            >
                             Edit
                             </el-button>
@@ -70,10 +70,26 @@
             </el-main>
         </el-container>
     </div>
+    <div id="mask" v-show="ispop">
+        <div id="pop-up">
+            <div id="pop-inputs">
+                <div>ID:<el-input v-model="userParam.id" disabled class="pop-input" size="small"></el-input></div>
+                <div>UserName:<el-input placeholder="User Name cannot be empty" v-model="userParam.userName" class="pop-input" size="small"></el-input></div>
+                <div>TrueName:<el-input v-model="userParam.trueName" class="pop-input" size="small"></el-input></div>
+                <div>Telephone:<el-input v-model="userParam.telephone" class="pop-input" size="small"></el-input></div>
+                <div>Email:<el-input v-model="userParam.email" class="pop-input" size="small"></el-input></div>
+            </div>
+            <div id="pop-buttons">
+                <el-button size="large" type="primary" @click="ensure">Ensure</el-button>
+                <el-button size="large" type="info" @click="cancel">Cancel</el-button>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
 import axios from 'axios'
+import { ElMessage } from 'element-plus'
 export default {
    data(){
         return {
@@ -81,6 +97,14 @@ export default {
             page: 1,
             pageSize: 10,
             total: 0,
+            ispop:false,
+            userParam:{
+                id: null,
+                userName:null,
+                trueName:null,
+                telephone:null,
+                email: null
+            },
             searchValue: null,
             searchKey:"id",
         }
@@ -138,6 +162,71 @@ export default {
                 console.log(res)
                 that.getUsers()
             })
+        },
+        setUserParam(id, userName, trueName, telephone, email){
+
+            this.userParam.id = id
+            this.userParam.userName = userName
+            this.userParam.trueName = trueName
+            this.userParam.telephone = telephone
+            this.userParam.email = email
+            console.log(this.userParam)
+        },
+        editUser(row){
+            this.setUserParam(row.id,row.userName,row.trueName,row.telephone,row.email)
+            this.ispop=true
+        },
+        ensure(){
+            const that = this
+            if(this.userParam.userName){
+                if(this.userParam.id){
+                    console.log(this.userParam)
+                    axios.postForm("/backend/user/updateUser",{
+                        id:this.userParam.id,
+                        userName:this.userParam.userName,
+                        trueName:this.userParam.trueName,
+                        telephone:this.userParam.telephone,
+                        email:this.userParam.email
+                    }).then((res)=>{
+                        console.log(res)
+                        that.ispop = false
+                        ElMessage({
+                            type:"success",
+                            message:`Update user ${that.userParam.userName} successfully`
+                        })
+                        that.setUserParam(null,null,null,null)
+                        that.getUsers()
+                    })
+                }
+                else {
+                    axios.postForm("/backend/user/addUser",{
+                        userName:this.userParam.userName,
+                        trueName:this.userParam.trueName,
+                        telephone:this.userParam.telephone,
+                        email:this.userParam.email
+                    }).then((res)=>{
+                        console.log(res)
+                        that.ispop = false
+                        ElMessage({
+                            type:"success",
+                            message:`Add user ${that.userParam.userName} successfully`
+                        })
+                        that.setUserParam(null,null,null,null)
+                        that.getUsers()
+                        
+                    })
+                }
+            }
+            else {
+                ElMessage({
+                    type:"error",
+                    message:"User name cannot be empty"
+                })
+            }
+        },
+        cancel(){
+            this.setUserParam(null,null,null,null,null)
+            this.ispop = false
         }
     },
     created(){
@@ -177,5 +266,47 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+}
+#mask{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#pop-up {
+    width:500px;
+    height: 500px;
+    background-color: #c6e2ff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+#pop-inputs{
+    width: 300px;
+    height: 300px;
+    background-color:#c6e2ff ;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.pop-input{
+    width: 200px;
+}
+#pop-buttons{
+    margin-top: 30px;
+    width: 300px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 </style>
