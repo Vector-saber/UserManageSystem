@@ -49,4 +49,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         userMapper.insertUser(userName,trueName,telephone,email);
     }
 
+    @Override
+    public List<User> getUserLike(String str, String value, Integer currentPage, Integer pageSize){
+        return userMapper.getUserLike(str, value,currentPage,pageSize);
+    }
+
+    @Override
+    public Long getUserLikeCount(String str, String value) {
+        return userMapper.getUserLikeCount(str, value);
+    }
+
 }

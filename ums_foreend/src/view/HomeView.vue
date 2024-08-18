@@ -14,7 +14,7 @@
                             </el-option>
                         </el-select>
                         <el-input v-model="searchValue" style="width: 240px" placeholder="Please input" />
-                        <el-button size="default" type="primary"  plain >Search</el-button>
+                        <el-button size="default" type="primary"  plain @click="getUsers()">Search</el-button>
                     </div>
                     <el-button size="default" type="warning" @click="addUser">Add</el-button>
                 </div>
