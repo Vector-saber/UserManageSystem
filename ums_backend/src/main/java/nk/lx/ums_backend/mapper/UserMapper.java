@@ -17,4 +17,7 @@ public interface UserMapper extends BaseMapper<User> {
     @Select("select count(*) from user")
     Long getUserCount();
 
+    @Update("update user set valid = #{valid} where id = #{id}")
+    void updateValid(@Param("id")Integer id,@Param("valid")Integer valid);
+
 }

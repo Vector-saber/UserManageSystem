@@ -49,11 +49,10 @@
                            >
                             Edit
                             </el-button>
-                            {{ scope.row.id }}
                             <el-button
                             size="small"
                             type="danger"
-                            
+                            @click="deleteUser(scope.row.id)"
                             >
                             Delete
                             </el-button>
@@ -131,7 +130,15 @@ export default {
                 that.users = data.data
             })
         },
-        
+        deleteUser(id){
+            const that = this
+            axios.postForm("/backend/user/deleteUser",{
+                 id: id
+            }).then(res=>{
+                console.log(res)
+                that.getUsers()
+            })
+        }
     },
     created(){
         this.getUsers()
