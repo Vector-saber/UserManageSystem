@@ -29,4 +29,11 @@ public interface UserMapper extends BaseMapper<User> {
     void insertUser(@Param("userName")String userName,@Param("trueName")String trueName,
                     @Param("telephone")String telephone,@Param("email")String email);
 
+    @Select("select * from user where ${str} like '%${value}%' limit #{currentPage},#{pageSize} ")
+    List<User> getUserLike(@Param("str")String str, @Param("value")String value,@Param("currentPage")Integer currentPage
+            ,@Param("pageSize")Integer pageSize);
+
+    @Select("select count(*) from user where ${str} like '%${value}%' ")
+    Long getUserLikeCount(@Param("str")String str, @Param("value")String value);
+
 }

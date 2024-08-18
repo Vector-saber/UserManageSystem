@@ -38,6 +38,15 @@ public class UserController {
             userList = userService.getUsersPage((currentPage - 1) * pageSize, pageSize);
             userCount = userService.getUserCount();
         }
+        else if (str.equals("id")){
+            User user = userService.getById((Serializable) value);
+            if (user!=null)
+                userList.add(user);
+            userCount = userList.size()==0?0l:1l;
+        } else {
+            userList = userService.getUserLike(str,value.toString(),(currentPage-1)*pageSize,pageSize);
+            userCount = userService.getUserLikeCount(str,value.toString());
+        }
         page.setTotal(userCount);
         page.setPage(currentPage);
         page.setSize(pageSize);

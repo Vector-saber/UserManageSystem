@@ -19,4 +19,8 @@ public interface UserService extends IService<User> {
 
     void insertUser(String userName, String trueName, String telephone, String email);
 
+    List<User> getUserLike(String str, String value, Integer currentPage, Integer pageSize);
+
+    Long getUserLikeCount(String str, String value);
+
 }
