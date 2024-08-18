@@ -44,4 +44,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         userMapper.updateUser(id,userName,trueName,telephone,email);
     }
 
+    @Override
+    public void insertUser(String userName, String trueName, String telephone, String email) {
+        userMapper.insertUser(userName,trueName,telephone,email);
+    }
+
 }

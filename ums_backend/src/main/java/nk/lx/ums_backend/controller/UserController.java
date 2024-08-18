@@ -58,4 +58,10 @@ public class UserController {
         return ResponseVO.success();
     }
 
+    @PostMapping("/addUser")
+    public ResponseVO<?> addUser(User user){
+        userService.insertUser(user.getUserName(),user.getTrueName(),user.getTelephone(),user.getEmail());
+        return ResponseVO.success();
+    }
+
 }
