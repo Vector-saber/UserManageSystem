@@ -25,4 +25,8 @@ public interface UserMapper extends BaseMapper<User> {
                     @Param("userName")String userName,@Param("trueName")String trueName,
                     @Param("telephone")String telephone,@Param("email")String email);
 
+    @Insert("insert into user (user_name,true_name,telephone,email) values(#{userName},#{trueName},#{telephone},#{email})")
+    void insertUser(@Param("userName")String userName,@Param("trueName")String trueName,
+                    @Param("telephone")String telephone,@Param("email")String email);
+
 }

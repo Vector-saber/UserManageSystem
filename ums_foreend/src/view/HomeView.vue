@@ -2,7 +2,22 @@
     <div id="container">
         <el-container>
             <el-header>
-                Header
+                <div id="search-lan">
+                    <div>
+                        <el-select v-model="searchKey"
+                        style="width: 240px">
+                            <el-option
+                                v-for="item in options"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value">
+                            </el-option>
+                        </el-select>
+                        <el-input v-model="searchValue" style="width: 240px" placeholder="Please input" />
+                        <el-button size="default" type="primary"  plain >Search</el-button>
+                    </div>
+                    <el-button size="default" type="warning" @click="addUser">Add</el-button>
+                </div>
             </el-header>
             <el-main>
                 <el-table 
@@ -107,6 +122,20 @@ export default {
             },
             searchValue: null,
             searchKey:"id",
+            options:[
+                {
+                    value:"id",
+                    label:"ID"
+                },
+                {
+                    value:"user_name",
+                    label:"User Name"
+                },
+                {
+                    value:"true_name",
+                    label:"True Name"
+                }
+            ]
         }
     },
     methods:{
@@ -175,6 +204,10 @@ export default {
         editUser(row){
             this.setUserParam(row.id,row.userName,row.trueName,row.telephone,row.email)
             this.ispop=true
+        },
+        addUser(){
+            this.setUserParam(null,null,null,null,null)
+            this.ispop = true
         },
         ensure(){
             const that = this
@@ -248,6 +281,19 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+#search-lan{
+    width:1000px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.el-select{
+    margin-right: 20px;
+}
+.el-select + .el-input {
+    margin-right: 20px;
 }
 .el-main {
     width:1240px;
