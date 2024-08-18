@@ -34,4 +34,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return userMapper.getUserCount();
     }
 
+    @Override
+    public void updateValid(Integer id, Integer valid) {
+        userMapper.updateValid(id, valid);
+    }
 }

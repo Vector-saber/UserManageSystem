@@ -45,4 +45,11 @@ public class UserController {
         return ResponseVO.success(page);
     }
 
+
+    @PostMapping("/deleteUser")
+    public ResponseVO<?> deleteUser(@RequestParam("id")Integer id){
+        userService.updateValid(id,0);
+        return ResponseVO.success();
+    }
+
 }

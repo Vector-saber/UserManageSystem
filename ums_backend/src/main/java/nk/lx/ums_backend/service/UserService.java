@@ -13,4 +13,7 @@ public interface UserService extends IService<User> {
 
     Long getUserCount();
 
+    void updateValid(Integer id,Integer valid);
+
+
 }
