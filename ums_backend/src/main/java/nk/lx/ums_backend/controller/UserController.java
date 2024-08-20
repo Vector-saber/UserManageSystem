@@ -40,6 +40,8 @@ public class UserController {
         }
         else if (str.equals("id")){
             User user = userService.getById((Serializable) value);
+            if(user.getValid()==0)
+                user = null;
             if (user!=null)
                 userList.add(user);
             userCount = userList.size()==0?0l:1l;
