@@ -33,7 +33,7 @@ public interface UserMapper extends BaseMapper<User> {
     List<User> getUserLike(@Param("str")String str, @Param("value")String value,@Param("currentPage")Integer currentPage
             ,@Param("pageSize")Integer pageSize);
 
-    @Select("select count(*) from user where ${str} like '%${value}%' ")
+    @Select("select count(*) from user where ${str} like '%${value}%' and valid=1 ")
     Long getUserLikeCount(@Param("str")String str, @Param("value")String value);
 
 }
